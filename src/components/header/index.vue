@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="m-header">
     <el-row>
       <top-bar />
     </el-row>
@@ -20,3 +20,8 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "@/assets/css/public/header/index.scss";
+@import "@/assets/css/public/header/search.scss";
+</style>

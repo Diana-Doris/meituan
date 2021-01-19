@@ -4,7 +4,7 @@
       <i class="el-icon-location" />
       <router-link
         class="changeCity"
-        :to="{name: 'changeCity'}"
+        :to="{name: 'ChangeCity'}"
       >切换城市</router-link>
       [
       <a href="#">门头沟区</a>
@@ -15,11 +15,11 @@
     <div class="m-user">
       <router-link
         class="login"
-        :to="{name: 'login'}"
+        :to="{name: 'Login'}"
       >立即登录</router-link>
       <router-link
         class="register"
-        :to="{name: 'register'}"
+        :to="{name: 'Register'}"
       >注册</router-link>
     </div>
     <div class="m-user">
