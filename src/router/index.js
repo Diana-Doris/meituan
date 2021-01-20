@@ -33,12 +33,12 @@ export default new Router({
           path: "/register",
           name: "Register",
           component: () => import("../page/register.vue")
-        }
-        /* {
+        },
+        {
           path: "/s:name",
           name: "Goods",
           component: () => import("../page/goodList.vue")
-        } */
+        }
       ]
     },
     {

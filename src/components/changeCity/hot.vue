@@ -4,9 +4,9 @@
       <dt>{{ title }}</dt>
       <dd
         v-for="hot in hotData"
-        :key="hot"
+        :key="hot.id"
       >
-        {{ hot }}
+        {{ hot.name }}
       </dd>
     </dl>
   </div>

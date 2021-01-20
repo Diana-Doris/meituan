@@ -29,8 +29,17 @@
 import hot from '../components/changeCity/hot.vue'
 import province from '../components/changeCity/province.vue'
 import category from '../components/changeCity/category.vue'
+import http from '@/api'
 
 export default {
+  created () {
+    http.getHotCityList().then(res => {
+      this.hotData = res
+    })
+    http.getRecentCityList().then(res => {
+      this.currentSearch = res
+    })
+  },
   components: {
     hot,
     province,
@@ -38,8 +47,8 @@ export default {
   },
   data () {
     return {
-      hotData: ['北京', '上海', '广州', '深圳', '天津', '西安', '重庆', '杭州', '南京', '武汉', '成都'],
-      currentSearch: ['北京', '上海']
+      hotData: [],
+      currentSearch: []
     }
   },
 }

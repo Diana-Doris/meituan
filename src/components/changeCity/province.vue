@@ -8,6 +8,7 @@
       @changeActive="changeProvinceActive($event)"
       :showActive="showProvinceActive"
       @changeValue="changeProvinceValue($event)"
+      :my_name="provinceName"
     />
 
     <m-select
@@ -17,6 +18,8 @@
       @changeActive="changeCityActive($event)"
       :showActive="showCityActive"
       @changeValue="changeCityValue($event)"
+      :disabled="disabledCity"
+      :my_name="cityName"
     />
 
     <span>直接搜索:</span>
@@ -42,16 +45,27 @@
 
 <script>
 import MSelect from './select.vue'
+import http from '@/api'
+
 export default {
+  created () {
+    http.getHotProvinceList().then(res => {
+      this.provincetList = this.splitCol(res)
+
+    })
+  },
   data () {
     return {
+      provinceName: 'provinceName',
+      cityName: 'name',
+      disabledCity: true,
       options: [],
       value: [],
       list: [],
       loading: false,
-      provincetList: ['浙江', '江苏', '西藏'],
+      provincetList: [],
       province: '省份',
-      cityList: ['宁波', '杭州'],
+      cityList: [],
       city: '城市',
       showProvinceActive: false,
       showCityActive: false,
@@ -64,6 +78,16 @@ export default {
     });
   },
   methods: {
+    splitCol (list) {
+      let splitNum = Math.ceil(list.length / 12);
+      let resultList = [];
+      if (list.length > 12) {
+        for (let i = 0; i < splitNum; i++) {
+          resultList.push(list.slice(i * 12, 12 + i * 12))
+        }
+      }
+      return resultList;
+    },
     remoteMethod (query) {
       console.log(query)
       if (query !== '') {
@@ -87,12 +111,16 @@ export default {
       this.showProvinceActive = false;
     },
     changeProvinceValue (item) {
-      this.province = item;
+      this.province = item.provinceName;
       this.showProvinceActive = false;
+      this.disabledCity = false;
+      this.cityList = this.splitCol(item.cityInfoList)
     },
     changeCityValue (item) {
-      this.city = item;
+      this.city = item.name;
       this.showCityActive = false;
+      this.$store.dispatch('getPosition', item)
+      this.$router.push({ name: 'Index' })
     }
   },
   components: {

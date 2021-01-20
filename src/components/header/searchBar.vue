@@ -31,14 +31,11 @@
             v-if="showHot"
           >
             <dt>热门搜索</dt>
-            <dd>
-              <router-link to="/s">京东第一温泉度假村</router-link>
-            </dd>
-            <dd>
-              <router-link to="/s">京东第一温泉度假村</router-link>
-            </dd>
-            <dd>
-              <router-link to="/s">京东第一温泉度假村</router-link>
+            <dd
+              v-for="hot in hotList"
+              :key="hot"
+            >
+              <router-link :to="{name: 'Goods', params: {name: hot}}">{{hot}}</router-link>
             </dd>
           </dl>
 
@@ -46,44 +43,34 @@
             class="searchList"
             v-if="showSearch"
           >
-            <dd>
-              <router-link to="/s">火锅</router-link>
-            </dd>
-            <dd>
-              <router-link to="/s">火锅</router-link>
-            </dd>
-            <dd>
-              <router-link to="/s">火锅</router-link>
-            </dd>
-            <dd>
-              <router-link to="/">火锅</router-link>
+            <dd
+              v-for="(eat,index) in searchList"
+              :key="eat+index"
+            >
+              <router-link :to="{name: 'Goods', params: {name: eat}}">{{eat}}</router-link>
             </dd>
           </dl>
         </div>
         <p class="suggest">
-          <a
+          <!-- <a
             href="#"
             v-for="(suggest,index) in suggestList"
-            :key="suggest"
-          >{{ suggest }}</a>
+            :key="suggest+index"
+          >{{ suggest }}</a> -->
 
-          <!-- <router-link
-            v-for="(item, index) in suggestList"
-            :key="item + '~' + index"
-            :to="{name: 'goods', params: {name: item}}"
-          >{{item}}</router-link> -->
-          <!-- <router-link to="/">北京故宫博物院</router-link>
-                    <router-link to="/"> 北京欢乐谷</router-link>
-                    <router-link  to="/"> 尚隐·泉都市生活馆</router-link>
-                    <router-link  to="/">故宫珍宝馆</router-link>
-                    <router-link  to="/">北京连升商务酒店</router-link>
-                    <router-link  to="/">  </router-link> -->
+          <router-link
+            v-for="item in suggestList"
+            :key="item"
+            :to="{name: 'Goods', params: {name: item}}"
+          >{{ item }}</router-link>
+
         </p>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
+import http from '@/api'
 export default {
   data () {
     return {
@@ -91,10 +78,14 @@ export default {
       isFocus: false,
       hotList: [],
       searchList: [],
-      suggestList: ['京东第一温泉度假村', '99旅馆连锁', '尚客优快捷酒店']
+      suggestList: []
     }
   },
   created () {
+    http.getHotList().then(res => {
+      this.suggestList = [...res];
+      this.hotList = res.splice(0, 5);
+    });
 
   },
   methods: {
@@ -106,7 +97,14 @@ export default {
     focus () {
       this.isFocus = true
     },
-    input () {
+    input (val) {
+      console.log(val)
+      http.getSearchList().then(res => {
+        console.log(res.list)
+        this.searchList = res.list.filter(ele => {
+          return ele.includes(val)
+        })
+      })
     }
   },
   computed: {

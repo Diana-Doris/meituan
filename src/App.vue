@@ -5,8 +5,12 @@
 </template>
 
 <script>
+// import axios from './axios.js';
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    // axios.getHotList()
+  },
 }
 </script>
 
