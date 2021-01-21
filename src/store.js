@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    position: "上海"
+    position: {}
   },
   mutations: {
     setPosition(state, val) {

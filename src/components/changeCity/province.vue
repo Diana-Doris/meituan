@@ -31,14 +31,18 @@
       placeholder="请输入关键词"
       :remote-method="remoteMethod"
       :loading="loading"
+      @change="cityClick"
     >
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
+      <router-link :to="{name:'Goods'}">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.name"
+          :value="item.name"
+          @click="clicK"
+        >
+        </el-option>
+      </router-link>
     </el-select>
   </div>
 </template>
@@ -51,7 +55,9 @@ export default {
   created () {
     http.getHotProvinceList().then(res => {
       this.provincetList = this.splitCol(res)
-
+    })
+    http.getCityList().then(res => {
+      this.list = res
     })
   },
   data () {
@@ -69,15 +75,16 @@ export default {
       city: '城市',
       showProvinceActive: false,
       showCityActive: false,
-      states: ['哈尔滨', '宁波', '黑龙江', '杜丹江', '黑江', '黑龙', '黑龙0江']
     }
   },
-  mounted () {
-    this.list = this.states.map(item => {
-      return { value: `${item}`, label: `${item}` };
-    });
-  },
   methods: {
+    clicK () {
+      console.log('click')
+    },
+    cityClick (item) {
+      console.log(this.value)
+      // console.log(item)
+    },
     splitCol (list) {
       let splitNum = Math.ceil(list.length / 12);
       let resultList = [];
@@ -89,13 +96,12 @@ export default {
       return resultList;
     },
     remoteMethod (query) {
-      console.log(query)
       if (query !== '') {
         this.loading = true;
         setTimeout(() => {
           this.loading = false;
           this.options = this.list.filter(item => {
-            return item.label.indexOf(query) > -1;
+            return item.name.indexOf(query) > -1;
           });
         }, 200);
       } else {

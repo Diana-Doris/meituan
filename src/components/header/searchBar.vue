@@ -98,7 +98,6 @@ export default {
       this.isFocus = true
     },
     input (val) {
-      console.log(val)
       http.getSearchList().then(res => {
         console.log(res.list)
         this.searchList = res.list.filter(ele => {

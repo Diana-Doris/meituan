@@ -9,8 +9,15 @@ let instance = axios.create({
 
 instance.interceptors.response.use(
   response => {
-    // console.log(response);
     if (response.status === 200) {
+      console.log(response);
+      if (
+        response.config.url === "/api/meituan/login" ||
+        response.config.url === "/api/meituan/register"
+      ) {
+        console.log(response.data);
+        return response.data;
+      }
       if (!response.data.data) {
         return response.data;
       }

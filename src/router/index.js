@@ -24,16 +24,7 @@ export default new Router({
           name: "ChangeCity",
           component: () => import("../page/changeCity.vue")
         },
-        {
-          path: "/login",
-          name: "Login",
-          component: () => import("../page/login.vue")
-        },
-        {
-          path: "/register",
-          name: "Register",
-          component: () => import("../page/register.vue")
-        },
+
         {
           path: "/s:name",
           name: "Goods",
@@ -44,7 +35,19 @@ export default new Router({
     {
       path: "/blank",
       name: "Blank",
-      component: blank
+      component: blank,
+      children: [
+        {
+          path: "/login",
+          name: "Login",
+          component: () => import("../page/login.vue")
+        },
+        {
+          path: "/register",
+          name: "Register",
+          component: () => import("../page/register.vue")
+        }
+      ]
     }
   ]
 });

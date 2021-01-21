@@ -1,6 +1,16 @@
 import instance from "../axios.js";
 const meituan = "/api/meituan/";
 let Http = {
+  /* 登录接口 */
+  Login({ userName, password }) {
+    return instance.get(meituan + "login", { params: { userName, password } });
+  },
+  /* 登录接口 */
+  Register({ userName, password, rePassword }) {
+    return instance.get(meituan + "register", {
+      params: { userName, password, rePassword }
+    });
+  },
   /* 搜索框列表数据获取 */
   getSearchList() {
     return instance.get(meituan + "header/search.json");
