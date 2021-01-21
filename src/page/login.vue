@@ -132,6 +132,7 @@ export default {
         console.log(res)
         if (res.status === 'success') {
           this.$router.push({ name: 'Index' })
+          this.$store.commit('setUserName', this.userName)
         } else {
           this.error = res.msg
 

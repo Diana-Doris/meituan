@@ -49,14 +49,14 @@
             >
           </h4>
 
-          <p class="m-life-login-name">Hi！ </p>
-          <p>
-            <router-link :to="{name: 'register'}">
+          <p class="m-life-login-name">Hi！{{$store.state.userName ? $store.state.userName :'你好'}} </p>
+          <p v-if="!$store.state.userName">
+            <router-link :to="{name: 'Register'}">
               <el-button round>注册</el-button>
             </router-link>
           </p>
-          <p>
-            <router-link :to="{name: 'login'}">
+          <p v-if="!$store.state.userName">
+            <router-link :to="{name: 'Login'}">
               <el-button round>立即登陆</el-button>
             </router-link>
           </p>

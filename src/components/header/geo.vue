@@ -15,7 +15,10 @@
       > {{city.name}} </a>
       ]
     </div>
-    <div class="m-user">
+    <div
+      class="m-user"
+      v-if="!$store.state.userName"
+    >
       <router-link
         class="login"
         :to="{name: 'Login'}"

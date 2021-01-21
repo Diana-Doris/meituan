@@ -5,9 +5,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    position: {}
+    position: {},
+    userName: ""
   },
   mutations: {
+    setUserName(state, val) {
+      state.userName = val;
+    },
     setPosition(state, val) {
       state.position = val;
     }
